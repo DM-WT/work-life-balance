@@ -1,18 +1,34 @@
-'use client';
+"use client";
 
+import { useState } from 'react';
 import Link from 'next/link';
 
-const Navbar = ({ logo, links }) => (
-  <nav className="flex justify-between items-center p-4 shadow">
-    <img src={logo} alt="Logo" className="h-10" />
-    <ul className="flex space-x-4">
-      {links.map((link, idx) => (
-        <li key={idx}>
-          <Link href={link.href}>{link.label}</Link>
-        </li>
-      ))}
-    </ul>
-  </nav>
-);
+export default function Navbar({ logo, links }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-export default Navbar;
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <Link href="/">
+          <img src={logo} alt="Logo" className="logo-image" />
+        </Link>
+      </div>
+
+      <button className="hamburger" onClick={toggleMenu} aria-label="Toggle Menu">
+        <span className="hamburger-icon">☰</span>
+      </button>
+
+      <div className={`navbar-links ${isOpen ? 'open' : ''}`}>
+        {links.map((link) => (
+          <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)}>
+            {link.label}
+          </Link>
+        ))}
+      </div>
+    </nav>
+  );
+}

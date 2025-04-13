@@ -1,4 +1,4 @@
-"use client";  // Diese Direktive sorgt dafür, dass React-Hooks wie `useState` funktionieren
+"use client";
 
 import { useState } from 'react';
 import Navbar from './components/common/Navbar';
@@ -11,9 +11,8 @@ import MotivationalTip from './components/common/MotivationalTip';
 import CTAButton from './components/common/CTAButton';
 
 export default function Home() {
-  // Beispiel-Daten für Komponenten
   const [quizAnswer, setQuizAnswer] = useState('');
-  const progress = 50; // Beispiel Fortschritt
+  const progress = 50;
   const results = [
     { topic: 'React', score: 8 },
     { topic: 'JavaScript', score: 9 },
@@ -26,13 +25,10 @@ export default function Home() {
   ];
 
   return (
-    <main className="p-4">
-      {/* Container mit max. Breite */}
+    <main className="p-2 sm:p-4">
       <div className="container">
-        {/* Navbar */}
-        <Navbar logo="/favicon.ico" links={links} />
+        <Navbar logo="/vercel.svg" links={links} />
 
-        {/* Hero Section */}
         <HeroSection
           title="Willkommen zu unserem Selbsttest"
           subtitle="Finde heraus, wie gut du dich auskennst!"
@@ -40,11 +36,9 @@ export default function Home() {
           onStart={() => console.log('Test gestartet')}
         />
 
-        {/* Fortschrittsanzeige */}
         <ProgressBar progress={progress} />
 
-        {/* Kartenbeispiel */}
-        <div className="my-10">
+        <div className="my-6 sm:my-8 lg:my-10">
           <Card
             title="Kartenbeispiel"
             description="Dies ist ein Beispiel für eine wiederverwendbare Karte."
@@ -52,8 +46,7 @@ export default function Home() {
           />
         </div>
 
-        {/* Quiz Card */}
-        <div className="my-10">
+        <div className="my-6 sm:my-8 lg:my-10">
           <QuizCard
             title="Was ist React?"
             text="Gib hier deine Antwort ein"
@@ -62,21 +55,18 @@ export default function Home() {
           />
         </div>
 
-        {/* Ergebniszusammenfassung */}
-        <div className="my-10">
+        <div className="my-6 sm:my-8 lg:my-10">
           <ResultSummary results={results} />
         </div>
 
-        {/* Motivations-Tipp */}
-        <div className="my-10">
+        <div className="my-6 sm:my-8 lg:my-10">
           <MotivationalTip
             title="Tipp des Tages"
             text="Bleib dran, du machst großartige Fortschritte!"
           />
         </div>
 
-        {/* CTA-Button */}
-        <div className="my-10">
+        <div className="my-6 sm:my-8 lg:my-10 text-center">
           <CTAButton text="Jetzt starten" onClick={() => console.log('Start gedrückt')} />
         </div>
       </div>
