@@ -1,0 +1,100 @@
+<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hintergrund mit sanftem Farbverlauf -->
+  <defs>
+    <linearGradient id="heroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f2ff" />
+      <stop offset="100%" stop-color="#e5faf2" />
+    </linearGradient>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c9e6ff" />
+      <stop offset="100%" stop-color="#e8f7ff" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Hintergrund -->
+  <rect width="800" height="400" fill="url(#heroGradient)" rx="20" ry="20" />
+  
+  <!-- Himmel/Landschaft -->
+  <rect x="50" y="50" width="700" height="280" fill="url(#skyGradient)" rx="15" ry="15" />
+  
+  <!-- Wolken -->
+  <g>
+    <ellipse cx="150" cy="90" rx="45" ry="25" fill="#ffffff" opacity="0.8" />
+    <ellipse cx="180" cy="100" rx="35" ry="20" fill="#ffffff" opacity="0.8" />
+    <ellipse cx="120" cy="100" rx="40" ry="22" fill="#ffffff" opacity="0.8" />
+    
+    <ellipse cx="600" cy="120" rx="55" ry="30" fill="#ffffff" opacity="0.7" />
+    <ellipse cx="640" cy="130" rx="45" ry="25" fill="#ffffff" opacity="0.7" />
+    <ellipse cx="560" cy="130" rx="50" ry="27" fill="#ffffff" opacity="0.7" />
+  </g>
+  
+  <!-- Hügel im Hintergrund -->
+  <ellipse cx="400" cy="330" rx="500" ry="120" fill="#a7d9a3" opacity="0.6" />
+  <ellipse cx="200" cy="350" rx="300" ry="100" fill="#91cfa2" opacity="0.7" />
+  <ellipse cx="600" cy="350" rx="350" ry="90" fill="#7ec58f" opacity="0.7" />
+  
+  <!-- Bäume -->
+  <g>
+    <!-- Baum 1 -->
+    <rect x="150" y="220" width="10" height="50" fill="#7d5a4f" />
+    <ellipse cx="155" cy="200" rx="25" ry="30" fill="#5eb878" />
+    
+    <!-- Baum 2 -->
+    <rect x="220" y="230" width="12" height="45" fill="#7d5a4f" />
+    <ellipse cx="226" cy="205" rx="30" ry="35" fill="#4eaa6a" />
+    
+    <!-- Baum 3 -->
+    <rect x="600" y="235" width="12" height="45" fill="#7d5a4f" />
+    <ellipse cx="606" cy="210" rx="30" ry="35" fill="#5eb878" />
+    
+    <!-- Baum 4 -->
+    <rect x="670" y="225" width="10" height="50" fill="#7d5a4f" />
+    <ellipse cx="675" cy="205" rx="25" ry="30" fill="#4eaa6a" />
+  </g>
+  
+  <!-- Menschen -->
+  <g>
+    <!-- Person 1 im Meditationssitz -->
+    <circle cx="400" cy="240" r="20" fill="#6a98ca" /> <!-- Kopf -->
+    <path d="M 390 260 C 390 280, 410 280, 410 260" fill="#6a98ca" /> <!-- Körper -->
+    <ellipse cx="400" cy="290" rx="30" ry="10" fill="#5889bf" /> <!-- Beine im Schneidersitz -->
+    
+    <!-- Person 2 - entspannt sitzend -->
+    <circle cx="330" cy="250" r="15" fill="#ca6a98" /> <!-- Kopf -->
+    <rect x="322" y="265" width="16" height="25" fill="#ca6a98" rx="5" ry="5" /> <!-- Körper -->
+    <path d="M 322 290 C 310 310, 350 310, 338 290" fill="#bf5889" /> <!-- Beine -->
+    
+    <!-- Person 3 - stehend und entspannt -->
+    <circle cx="470" cy="245" r="15" fill="#98ca6a" /> <!-- Kopf -->
+    <rect x="462" y="260" width="16" height="35" fill="#98ca6a" rx="5" ry="5" /> <!-- Körper -->
+    <line x1="462" y1="270" x2="450" y2="290" stroke="#89bf58" stroke-width="3" /> <!-- Arm links -->
+    <line x1="478" y1="270" x2="490" y2="290" stroke="#89bf58" stroke-width="3" /> <!-- Arm rechts -->
+    <line x1="462" y1="295" x2="460" y2="320" stroke="#89bf58" stroke-width="3" /> <!-- Bein links -->
+    <line x1="478" y1="295" x2="480" y2="320" stroke="#89bf58" stroke-width="3" /> <!-- Bein rechts -->
+  </g>
+  
+  <!-- Sonne -->
+  <circle cx="650" cy="80" r="30" fill="#ffda8a" />
+  <g opacity="0.7">
+    <line x1="650" y1="30" x2="650" y2="10" stroke="#ffda8a" stroke-width="3" />
+    <line x1="650" y1="130" x2="650" y2="150" stroke="#ffda8a" stroke-width="3" />
+    <line x1="600" y1="80" x2="580" y2="80" stroke="#ffda8a" stroke-width="3" />
+    <line x1="700" y1="80" x2="720" y2="80" stroke="#ffda8a" stroke-width="3" />
+    <line x1="615" y1="45" x2="600" y2="30" stroke="#ffda8a" stroke-width="3" />
+    <line x1="685" y1="115" x2="700" y2="130" stroke="#ffda8a" stroke-width="3" />
+    <line x1="615" y1="115" x2="600" y2="130" stroke="#ffda8a" stroke-width="3" />
+    <line x1="685" y1="45" x2="700" y2="30" stroke="#ffda8a" stroke-width="3" />
+  </g>
+  
+  <!-- Herzballon als Symbol für Mental Health -->
+  <g transform="translate(100, 150) scale(0.5)">
+    <path d="M 50 30 C 20 0, 0 40, 50 100 C 100 40, 80 0, 50 30" fill="#ff9b9b" />
+    <line x1="50" y1="100" x2="50" y2="150" stroke="#d87979" stroke-width="2" />
+  </g>
+  
+  <!-- Wasserwellen als Symbol für Ruhe -->
+  <path d="M 50 350 C 100 330, 150 370, 200 350 C 250 330, 300 370, 350 350 C 400 330, 450 370, 500 350 C 550 330, 600 370, 650 350 C 700 330, 750 370, 800 350" 
+        fill="none" stroke="#a4d5f7" stroke-width="3" opacity="0.6" />
+  <path d="M 50 370 C 100 350, 150 390, 200 370 C 250 350, 300 390, 350 370 C 400 350, 450 390, 500 370 C 550 350, 600 390, 650 370 C 700 350, 750 390, 800 370" 
+        fill="none" stroke="#a4d5f7" stroke-width="2" opacity="0.4" />
+</svg>

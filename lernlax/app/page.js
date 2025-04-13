@@ -39,7 +39,7 @@ export default function Home() {
         <HeroSection
           title="Dein mentales Wohlbefinden ist wichtig"
           subtitle="Entdecke hilfreiche Werkzeuge und Ressourcen für deine psychische Gesundheit."
-          image="/mental-health-hero.jpg"
+          image="/mental-health-hero.svg"
           onStart={() => console.log('Wellness-Journey gestartet')}
         />
 
@@ -48,7 +48,7 @@ export default function Home() {
           <Card
             title="Wie fühlst du dich heute?"
             description="Deine tägliche Stimmungsverfolgung hilft dir, Muster zu erkennen und dein Wohlbefinden zu verbessern."
-            image="/mood-tracking.jpg"
+            image="/mood-tracking.svg"
           >
             <div className="mood-tracker mt-4">
               <div className="mood-icon" onClick={() => setMoodRating(1)}>😔</div>
