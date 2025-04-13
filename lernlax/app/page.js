@@ -1,5 +1,3 @@
-// page.js
-
 "use client";  // Diese Direktive sorgt dafür, dass React-Hooks wie `useState` funktionieren
 
 import { useState } from 'react';
@@ -29,47 +27,58 @@ export default function Home() {
 
   return (
     <main className="p-4">
-      <Navbar logo="/favicon.ico" links={links} />
+      {/* Container mit max. Breite */}
+      <div className="container">
+        {/* Navbar */}
+        <Navbar logo="/favicon.ico" links={links} />
 
-      <HeroSection
-        title="Willkommen zu unserem Selbsttest"
-        subtitle="Finde heraus, wie gut du dich auskennst!"
-        image="/hero-image.jpg"
-        onStart={() => console.log('Test gestartet')}
-      />
-
-      <ProgressBar progress={progress} />
-
-      <div className="my-10">
-        <Card
-          title="Kartenbeispiel"
-          description="Dies ist ein Beispiel für eine wiederverwendbare Karte."
-          image="/card-image.jpg"
+        {/* Hero Section */}
+        <HeroSection
+          title="Willkommen zu unserem Selbsttest"
+          subtitle="Finde heraus, wie gut du dich auskennst!"
+          image="/hero-image.jpg"
+          onStart={() => console.log('Test gestartet')}
         />
-      </div>
 
-      <div className="my-10">
-        <QuizCard
-          title="Was ist React?"
-          text="Gib hier deine Antwort ein"
-          value={quizAnswer}
-          onChange={setQuizAnswer}
-        />
-      </div>
+        {/* Fortschrittsanzeige */}
+        <ProgressBar progress={progress} />
 
-      <div className="my-10">
-        <ResultSummary results={results} />
-      </div>
+        {/* Kartenbeispiel */}
+        <div className="my-10">
+          <Card
+            title="Kartenbeispiel"
+            description="Dies ist ein Beispiel für eine wiederverwendbare Karte."
+            image="/card-image.jpg"
+          />
+        </div>
 
-      <div className="my-10">
-        <MotivationalTip
-          title="Tipp des Tages"
-          text="Bleib dran, du machst großartige Fortschritte!"
-        />
-      </div>
+        {/* Quiz Card */}
+        <div className="my-10">
+          <QuizCard
+            title="Was ist React?"
+            text="Gib hier deine Antwort ein"
+            value={quizAnswer}
+            onChange={setQuizAnswer}
+          />
+        </div>
 
-      <div className="my-10">
-        <CTAButton text="Jetzt starten" onClick={() => console.log('Start gedrückt')} />
+        {/* Ergebniszusammenfassung */}
+        <div className="my-10">
+          <ResultSummary results={results} />
+        </div>
+
+        {/* Motivations-Tipp */}
+        <div className="my-10">
+          <MotivationalTip
+            title="Tipp des Tages"
+            text="Bleib dran, du machst großartige Fortschritte!"
+          />
+        </div>
+
+        {/* CTA-Button */}
+        <div className="my-10">
+          <CTAButton text="Jetzt starten" onClick={() => console.log('Start gedrückt')} />
+        </div>
       </div>
     </main>
   );
