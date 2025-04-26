@@ -31,16 +31,32 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    const savedEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
-    setJournalEntries(savedEntries);
+    fetchEntries();
   }, []);
 
-  const handleSaveEntry = () => {
+  const fetchEntries = async () => {
+    try {
+      const response = await fetch('/api/journal');
+      const data = await response.json();
+      setJournalEntries(data);
+    } catch (error) {
+      console.error('Fehler beim Laden der Einträge:', error);
+    }
+  };
+
+  const handleSaveEntry = async () => {
     if (journalEntry.trim() !== '') {
-      const newEntries = [...journalEntries, { text: journalEntry, date: new Date().toLocaleString() }];
-      setJournalEntries(newEntries);
-      localStorage.setItem('journalEntries', JSON.stringify(newEntries));
-      setJournalEntry('');
+      try {
+        await fetch('/api/journal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: journalEntry }),
+        });
+        setJournalEntry('');
+        fetchEntries(); // Nach dem Speichern neu laden
+      } catch (error) {
+        console.error('Fehler beim Speichern:', error);
+      }
     }
   };
 
@@ -64,9 +80,9 @@ export default function Home() {
             image="/mood-tracking.svg"
           >
             <div className="mood-tracker mt-4">
-              {[1,2,3,4,5].map((num) => (
+              {[1, 2, 3, 4, 5].map((num) => (
                 <div key={num} className="mood-icon" onClick={() => setMoodRating(num)}>
-                  {['😔','😕','😐','🙂','😊'][num-1]}
+                  {['😔', '😕', '😐', '🙂', '😊'][num - 1]}
                 </div>
               ))}
             </div>
@@ -90,9 +106,9 @@ export default function Home() {
 
         {/* Wohlbefindens-Zusammenfassung */}
         <div className="my-6 sm:my-8 lg:my-10">
-          <ResultSummary 
+          <ResultSummary
             title="Deine Wohlbefindens-Übersicht"
-            results={results} 
+            results={results}
           />
         </div>
 
@@ -143,7 +159,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {journalEntries.map((entry, index) => (
               <div key={index} className="card">
-                <h4 className="mb-2">{entry.date}</h4>
+                <h4 className="mb-2">{new Date(entry.created_at).toLocaleString()}</h4>
                 <p>{entry.text}</p>
               </div>
             ))}
