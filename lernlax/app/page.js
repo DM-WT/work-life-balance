@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/common/Navbar';
 import HeroSection from './components/layout/HeroSection';
 import ProgressBar from './components/layout/ProgressBar';
@@ -13,16 +13,15 @@ import CTAButton from './components/common/CTAButton';
 export default function Home() {
   const [moodRating, setMoodRating] = useState('');
   const [journalEntry, setJournalEntry] = useState('');
-  const progress = 65; // Fortschritt für Mood-Tracking-Streak
-  
-  // Beispielhafte Mood-Tracking-Ergebnisse
+  const [journalEntries, setJournalEntries] = useState([]);
+  const progress = 65;
+
   const results = [
     { topic: 'Stimmung', score: 7 },
     { topic: 'Schlafqualität', score: 8 },
     { topic: 'Energielevel', score: 6 },
   ];
 
-  // Angepasste Links für eine Mental-Health-Website
   const links = [
     { label: 'Home', href: '/' },
     { label: 'Selbsthilfe', href: '/selbsthilfe' },
@@ -30,6 +29,20 @@ export default function Home() {
     { label: 'Stimmungs-Tracker', href: '/tracker' },
     { label: 'Kontakt', href: '/kontakt' },
   ];
+
+  useEffect(() => {
+    const savedEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+    setJournalEntries(savedEntries);
+  }, []);
+
+  const handleSaveEntry = () => {
+    if (journalEntry.trim() !== '') {
+      const newEntries = [...journalEntries, { text: journalEntry, date: new Date().toLocaleString() }];
+      setJournalEntries(newEntries);
+      localStorage.setItem('journalEntries', JSON.stringify(newEntries));
+      setJournalEntry('');
+    }
+  };
 
   return (
     <main className="p-2 sm:p-4">
@@ -43,7 +56,7 @@ export default function Home() {
           onStart={() => console.log('Wellness-Journey gestartet')}
         />
 
-        {/* Aktuelle Stimmung Tracker */}
+        {/* Stimmung Tracker */}
         <div className="my-6 sm:my-8 lg:my-10">
           <Card
             title="Wie fühlst du dich heute?"
@@ -51,29 +64,19 @@ export default function Home() {
             image="/mood-tracking.svg"
           >
             <div className="mood-tracker mt-4">
-              <div className="mood-icon" onClick={() => setMoodRating(1)}>😔</div>
-              <div className="mood-icon" onClick={() => setMoodRating(2)}>😕</div>
-              <div className="mood-icon" onClick={() => setMoodRating(3)}>😐</div>
-              <div className="mood-icon" onClick={() => setMoodRating(4)}>🙂</div>
-              <div className="mood-icon" onClick={() => setMoodRating(5)}>😊</div>
+              {[1,2,3,4,5].map((num) => (
+                <div key={num} className="mood-icon" onClick={() => setMoodRating(num)}>
+                  {['😔','😕','😐','🙂','😊'][num-1]}
+                </div>
+              ))}
             </div>
           </Card>
         </div>
 
-        {/* Streak-Anzeige */}
+        {/* Fortschritt */}
         <div className="my-4">
           <h3 className="text-center mb-2">Dein Achtsamkeits-Streak: {progress}%</h3>
           <ProgressBar progress={progress} />
-        </div>
-
-        {/* Journaling-Bereich */}
-        <div className="my-6 sm:my-8 lg:my-10">
-          <QuizCard
-            title="Gedanken-Journal"
-            text="Schreibe deine Gedanken und Gefühle nieder..."
-            value={journalEntry}
-            onChange={setJournalEntry}
-          />
         </div>
 
         {/* Atemübung */}
@@ -93,7 +96,7 @@ export default function Home() {
           />
         </div>
 
-        {/* Selbsthilfe-Ressourcen */}
+        {/* Ressourcen */}
         <div className="my-6 sm:my-8 lg:my-10">
           <h3 className="text-center mb-4">Hilfreiche Ressourcen</h3>
           <div className="resource-card">
@@ -120,6 +123,33 @@ export default function Home() {
         <div className="my-6 sm:my-8 lg:my-10 text-center">
           <CTAButton text="Starte deine Wohlbefinden-Reise" onClick={() => console.log('Wohlbefinden-Reise gestartet')} />
         </div>
+
+        {/* Journaling Bereich */}
+        <div className="my-6 sm:my-8 lg:my-10">
+          <QuizCard
+            title="Gedanken-Journal"
+            text="Schreibe deine Gedanken und Gefühle nieder..."
+            value={journalEntry}
+            onChange={setJournalEntry}
+          />
+          <div className="text-center mt-4">
+            <button className="cta-button" onClick={handleSaveEntry}>Speichern</button>
+          </div>
+        </div>
+
+        {/* Auslesebereich */}
+        <div className="my-6 sm:my-8 lg:my-10">
+          <h3 className="text-center mb-6">Deine bisherigen Einträge</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {journalEntries.map((entry, index) => (
+              <div key={index} className="card">
+                <h4 className="mb-2">{entry.date}</h4>
+                <p>{entry.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </main>
   );
