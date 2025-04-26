@@ -1,10 +1,12 @@
 import { Pool } from 'pg';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL_NON_POOLING,
-  ssl: {
-    rejectUnauthorized: false, // ← wichtig damit Self-Signed Zertifikate akzeptiert werden
-  },
+  ssl: isProduction
+    ? { rejectUnauthorized: true }  // In Production (z.B. Vercel): SSL Zertifikate vollständig prüfen
+    : { rejectUnauthorized: false }, // Lokal (development): Self-signed Zertifikate erlauben
 });
 
 export async function GET() {
