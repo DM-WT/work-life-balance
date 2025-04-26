@@ -5,7 +5,6 @@ import Navbar from './components/common/Navbar';
 import HeroSection from './components/layout/HeroSection';
 import ProgressBar from './components/layout/ProgressBar';
 import Card from './components/common/Card';
-import QuizCard from './components/common/QuizCard';
 import ResultSummary from './components/layout/ResultSummary';
 import MotivationalTip from './components/common/MotivationalTip';
 import CTAButton from './components/common/CTAButton';
@@ -14,6 +13,7 @@ export default function Home() {
   const [moodRating, setMoodRating] = useState('');
   const [journalEntry, setJournalEntry] = useState('');
   const [journalEntries, setJournalEntries] = useState([]);
+  const [loading, setLoading] = useState(false);
   const progress = 65;
 
   const results = [
@@ -37,26 +37,39 @@ export default function Home() {
   const fetchEntries = async () => {
     try {
       const response = await fetch('/api/journal');
+      if (!response.ok) throw new Error('Fehler beim Abrufen der Einträge.');
       const data = await response.json();
       setJournalEntries(data);
     } catch (error) {
-      console.error('Fehler beim Laden der Einträge:', error);
+      console.error('Fehler beim Laden:', error.message);
     }
   };
 
   const handleSaveEntry = async () => {
     if (journalEntry.trim() !== '') {
       try {
-        await fetch('/api/journal', {
+        setLoading(true);
+        console.log('Speichern gestartet');
+        const response = await fetch('/api/journal', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text: journalEntry }),
         });
+
+        if (!response.ok) {
+          throw new Error('Fehler beim Speichern des Eintrags.');
+        }
+
+        console.log('Speichern erfolgreich');
         setJournalEntry('');
-        fetchEntries(); // Nach dem Speichern neu laden
+        await fetchEntries();
       } catch (error) {
-        console.error('Fehler beim Speichern:', error);
+        console.error('Fehler beim Speichern:', error.message);
+      } finally {
+        setLoading(false);
       }
+    } else {
+      console.warn('Kein Text zum Speichern.');
     }
   };
 
@@ -106,10 +119,7 @@ export default function Home() {
 
         {/* Wohlbefindens-Zusammenfassung */}
         <div className="my-6 sm:my-8 lg:my-10">
-          <ResultSummary
-            title="Deine Wohlbefindens-Übersicht"
-            results={results}
-          />
+          <ResultSummary title="Deine Wohlbefindens-Übersicht" results={results} />
         </div>
 
         {/* Ressourcen */}
@@ -140,20 +150,31 @@ export default function Home() {
           <CTAButton text="Starte deine Wohlbefinden-Reise" onClick={() => console.log('Wohlbefinden-Reise gestartet')} />
         </div>
 
-        {/* Journaling Bereich */}
+        {/* Journaling Bereich - KORREKT ANGEPASST */}
         <div className="my-6 sm:my-8 lg:my-10">
-          <QuizCard
-            title="Gedanken-Journal"
-            text="Schreibe deine Gedanken und Gefühle nieder..."
-            value={journalEntry}
-            onChange={setJournalEntry}
-          />
-          <div className="text-center mt-4">
-            <button className="cta-button" onClick={handleSaveEntry}>Speichern</button>
+          <div className="quiz-card p-4 bg-white rounded shadow">
+            <h3 className="text-center mb-4">Gedanken-Journal</h3>
+            <textarea
+              value={journalEntry}
+              onChange={(e) => setJournalEntry(e.target.value)}
+              placeholder="Schreibe deine Gedanken und Gefühle..."
+              className="w-full p-4 rounded border shadow focus:outline-none"
+              rows={5}
+            />
+            <div className="text-center mt-4">
+              <button
+                type="button"
+                className="cta-button"
+                onClick={handleSaveEntry}
+                disabled={loading}
+              >
+                {loading ? 'Speichern...' : 'Speichern'}
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Auslesebereich */}
+        {/* Anzeige der gespeicherten Einträge */}
         <div className="my-6 sm:my-8 lg:my-10">
           <h3 className="text-center mb-6">Deine bisherigen Einträge</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
